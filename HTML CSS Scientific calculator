@@ -1,54 +1,53 @@
-HTML
- <div class="calculator">
-  <input type="text" id="screen" maxlength="20">
+app.component.html
+
+<div class="calculator">
+  <input type="text" id="screen" [(ngModel)]="expression" maxlength="20">
   <div class="calc-buttons">
-
-<div class="functions-one">
-<button class="button triggers">C</button>
-<button class="button basic-stuff">(</button>
-<button class="button basic-stuff">)</button>
-<button class="button numbers">7</button>
-<button class="button numbers">8</button>
-<button class="button numbers">9</button>
-<button class="button numbers">4</button>
-<button class="button numbers">5</button>
-<button class="button numbers">6</button>
-<button class="button numbers">1</button>
-<button class="button numbers">2</button>
-<button class="button numbers">3</button>
-<button class="button basic-stuff">±</button>
-<button class="button numbers">0</button>
-<button class="button basic-stuff">.</button>
+    <div class="functions-one">
+      <button class="button triggers" (click)="onButtonClick('C')">C</button>
+      <button class="button basic-stuff" (click)="onButtonClick('(')"> ( </button>
+      <button class="button basic-stuff" (click)="onButtonClick(')')"> ) </button>
+      <button class="button numbers" (click)="onButtonClick('7')">7</button>
+      <button class="button numbers" (click)="onButtonClick('8')">8</button>
+      <button class="button numbers" (click)="onButtonClick('9')">9</button>
+      <button class="button numbers" (click)="onButtonClick('4')">4</button>
+      <button class="button numbers" (click)="onButtonClick('5')">5</button>
+      <button class="button numbers" (click)="onButtonClick('6')">6</button>
+      <button class="button numbers" (click)="onButtonClick('1')">1</button>
+      <button class="button numbers" (click)="onButtonClick('2')">2</button>
+      <button class="button numbers" (click)="onButtonClick('3')">3</button>
+      <button class="button basic-stuff" (click)="onButtonClick('±')">±</button>
+      <button class="button numbers" (click)="onButtonClick('0')">0</button>
+      <button class="button basic-stuff" (click)="onButtonClick('.')">.</button>
+    </div>
+    <div class="functions-two">
+      <button class="button triggers" (click)="onButtonClick('<=')"><=</button>
+      <button class="button complex-stuff" (click)="onButtonClick('%')">%</button>
+      <button class="button complex-stuff" (click)="onButtonClick('x !')">x !</button>
+      <button class="button complex-stuff" (click)="onButtonClick('x^')">x^</button>
+      <button class="button basic-stuff" (click)="onButtonClick('*')">*</button>
+      <button class="button basic-stuff" (click)="onButtonClick('/')">/</button>
+      <button class="button complex-stuff" (click)="onButtonClick('ln')">ln</button>
+      <button class="button complex-stuff" (click)="onButtonClick('e')">e</button>
+      <button class="button basic-stuff" (click)="onButtonClick('+')">+</button>
+      <button class="button complex-stuff" (click)="onButtonClick('x ²')">x ²</button>
+      <button class="button complex-stuff" (click)="onButtonClick('log')">log</button>
+      <button class="button complex-stuff" (click)="onButtonClick('cos')">cos</button>
+      <button class="button basic-stuff" (click)="onButtonClick('-')">-</button>
+      <button class="button complex-stuff" (click)="onButtonClick('√')">√</button>
+      <button class="button complex-stuff" (click)="onButtonClick('sin')">sin</button>
+      <button class="button complex-stuff" (click)="onButtonClick('tan')">tan</button>
+      <button class="button triggers" (click)="onButtonClick('=')">=</button>
+      <button class="button complex-stuff" (click)="onButtonClick('π')">π</button>
+      <button class="button complex-stuff" (click)="onButtonClick('∘')">∘</button>
+      <button class="button complex-stuff" (click)="onButtonClick('rad')">rad</button>
+    </div>
+  </div>
 </div>
 
-<div class="functions-two">
-<button class="button triggers"><=</button>
-<button class="button complex-stuff">%</button>
-<button class="button complex-stuff">x !</button>
-<button class="button complex-stuff">x^</button>
-<button class="button basic-stuff">*</button>
-<button class="button basic-stuff">/</button>
-<button class="button complex-stuff">ln</button>
-<button class="button complex-stuff">e</button>
-<button class="button basic-stuff">+</button>
-<button class="button complex-stuff">x ²</button>
-<button class="button complex-stuff">log</button>
-<button class="button complex-stuff">cos</button>
-<button class="button basic-stuff">-</button>
-<button class="button complex-stuff">√</button>
-<button class="button complex-stuff">sin</button>
-<button class="button complex-stuff">tan</button>
-<button class="button triggers">=</button>
-<button class="button complex-stuff">π</button>
-<button class="button complex-stuff">∘</button>
-<button class="button complex-stuff">rad</button>
-</div>
-</div>
-</div> 
+****************************************************************************************************************************************************************************************************************************************
 
-
-CSS
-
+app.component.css
 .calculator {
     max-width: 530px;
     background-color: beige;
@@ -113,256 +112,64 @@ CSS
         background-color: #80ffff;
     }
 
+************************************************************************************************************************************************************************************************************************************************************
 
-//Typescript
+app.module.ts
 
-import { Component, OnInit } from '@angular/core';
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { FormsModule } from '@angular/forms';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+*************************************************************************************************************************************************************************************************************************************************************
+
+app.component.ts
+
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  display: string = '';
-
-  ngOnInit() {
-    const buttons = document.getElementsByClassName("button");
-
-    Array.prototype.forEach.call(buttons, (button: HTMLButtonElement) => {
-      button.addEventListener("click", () => {
-        if (button.textContent !== "=" &&
-            button.textContent !== "C" &&
-            button.textContent !== "x" &&
-            button.textContent !== "÷" &&
-            button.textContent !== "√" &&
-            button.textContent !== "x ²" &&
-            button.textContent !== "%" &&
-            button.textContent !== "<=" &&
-            button.textContent !== "±" &&
-            button.textContent !== "sin" &&
-            button.textContent !== "cos" &&
-            button.textContent !== "tan" &&
-            button.textContent !== "log" &&
-            button.textContent !== "ln" &&
-            button.textContent !== "x^" &&
-            button.textContent !== "x !" &&
-            button.textContent !== "π" &&
-            button.textContent !== "e" &&
-            button.textContent !== "rad" &&
-            button.textContent !== "∘") {
-          this.display += button.textContent;
-        } else if (button.textContent === "=") {
-          this.equals();
-        } else if (button.textContent === "C") {
-          this.clear();
-        } else if (button.textContent === "x") {
-          this.multiply();
-        } else if (button.textContent === "÷") {
-          this.divide();
-        } else if (button.textContent === "±") {
-          this.plusMinus();
-        } else if (button.textContent === "<=") {
-          this.backspace();
-        } else if (button.textContent === "%") {
-          this.percent();
-        } else if (button.textContent === "π") {
-          this.pi();
-        } else if (button.textContent === "x ²") {
-          this.square();
-        } else if (button.textContent === "√") {
-          this.squareRoot();
-        } else if (button.textContent === "sin") {
-          this.sin();
-        } else if (button.textContent === "cos") {
-          this.cos();
-        } else if (button.textContent === "tan") {
-          this.tan();
-        } else if (button.textContent === "log") {
-          this.log();
-        } else if (button.textContent === "ln") {
-          this.ln();
-        } else if (button.textContent === "x^") {
-          this.exponent();
-        } else if (button.textContent === "x !") {
-          this.factorial();
-        } else if (button.textContent === "e") {
-          this.exp();
-        } else if (button.textContent === "rad") {
-          this.radians();
-        } else if (button.textContent === "∘") {
-          this.degrees();
+export class AppComponent {
+  title = 'calculatorapp';
+ 
+    expression: string = '';
+  
+    onButtonClick(value: string) {
+      if (value === '=') {
+        // Implement the calculation logic when '=' is clicked.
+        try {
+          this.expression = eval(this.expression);
+        } catch (error) {
+          this.expression = 'Error';
         }
-      });
-    });
-  }
-
-  syntaxError() {
-    if (this.display === "Syntax Error") {
-      this.display = '';
-    }
-  }
-
-  equals() {
-    if (this.display.includes("^")) {
-      const parts = this.display.split("^");
-      if (parts.length === 2) {
-        const base = parseFloat(parts[0]);
-        const exponent = parseFloat(parts[1]);
-        if (!isNaN(base) && !isNaN(exponent)) {
-          this.display = Math.pow(base, exponent).toString();
-        }
-      }
-    } else {
-      try {
-        const result = eval(this.display);
-        if (typeof result === 'number') {
-          this.display = result.toString();
-        } else {
-          this.syntaxError();
-          this.display = 'Syntax Error';
-        }
-      } catch (error) {
-        this.syntaxError();
-        this.display = 'Syntax Error';
-      }
-    }
-  }
-
-  clear() {
-    this.display = '';
-  }
-
-  backspace() {
-    this.display = this.display.slice(0, -1);
-  }
-
-  multiply() {
-    this.display += "*";
-  }
-
-  divide() {
-    this.display += "/";
-  }
-
-  plusMinus() {
-    if (this.display.charAt(0) === '-') {
-      this.display = this.display.slice(1);
-    } else {
-      this.display = "-" + this.display;
-    }
-  }
-
-  factorial() {
-    const num = parseInt(this.display);
-    if (!isNaN(num)) {
-      if (num === 0) {
-        this.display = '1';
-      } else if (num < 0) {
-        this.display = 'undefined';
+      } else if (value === 'C') {
+        // Clear the input.
+        this.expression = '';
       } else {
-        let result = 1;
-        for (let i = 1; i <= num; i++) {
-          result *= i;
-        }
-        this.display = result.toString();
+        // Append the clicked value to the expression.
+        this.expression += value;
       }
-    }
-  }
-
-  pi() {
-    this.display = (parseFloat(this.display) * Math.PI).toString();
-  }
-
-  square() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = (num * num).toString();
-    }
-  }
-
-  squareRoot() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num) && num >= 0) {
-      this.display = Math.sqrt(num).toString();
-    } else {
-      this.syntaxError();
-      this.display = 'Syntax Error';
-    }
-  }
-
-  percent() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = (num / 100).toString();
-    }
-  }
-
-  sin() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = Math.sin(num).toString();
-    }
-  }
-
-  cos() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = Math.cos(num).toString();
-    }
-  }
-
-  tan() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = Math.tan(num).toString();
-    }
-  }
-
-  log() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num) && num > 0) {
-      this.display = Math.log10(num).toString();
-    } else {
-      this.syntaxError();
-      this.display = 'Syntax Error';
-    }
-  }
-
-  ln() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num) && num > 0) {
-      this.display = Math.log(num).toString();
-    } else {
-      this.syntaxError();
-      this.display = 'Syntax Error';
-    }
-  }
-
-  exponent() {
-    this.display += "^";
-  }
-
-  exp() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = Math.exp(num).toString();
-    }
-  }
-
-  radians() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = (num * (Math.PI / 180)).toString();
-    }
-  }
-
-  degrees() {
-    const num = parseFloat(this.display);
-    if (!isNaN(num)) {
-      this.display = (num * (180 / Math.PI)).toString();
-    }
-  }
 }
+  }
+
 
 
