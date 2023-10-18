@@ -170,6 +170,56 @@ export class AppComponent {
       }
 }
   }
+********************************************************************************************************************************************************************************************
 
+Edited HTML
+
+<div class="calculator">
+  <input type="text" id="screen" maxlength="20">
+  <div class="calc-buttons">
+
+<div class="functions-one">
+<button class="button triggers">C</button>
+<button class="button basic-stuff">(</button>
+<button class="button basic-stuff">)</button>
+<button  (click)="appendToDisplay('7')" class="button numbers">7</button>
+<button  (click)="appendToDisplay('8')"class="button numbers">8</button>
+<button  (click)="appendToDisplay('9')"class="button numbers">9</button>
+<button  (click)="appendToDisplay('4')"class="button numbers">4</button>
+<button  (click)="appendToDisplay('5')"class="button numbers">5</button>
+<button  (click)="appendToDisplay('6')"class="button numbers">6</button>
+<button  (click)="appendToDisplay('1')"class="button numbers">1</button>
+<button  (click)="appendToDisplay('2')"class="button numbers">2</button>
+<button  (click)="appendToDisplay('3')" class="button numbers">3</button>
+<button class="button basic-stuff">±</button>
+<button  (click)="appendToDisplay('0')"class="button numbers">0</button>
+<button  (click)="appendToDisplay('.')"class="button basic-stuff">.</button>
+</div>
+
+<div class="functions-two">
+<button class="button triggers"><=</button>
+<button  (click)="appendToDisplay('%')" class="button complex-stuff">%</button>
+<button  (click)="appendToDisplay('!')"class="button complex-stuff">x !</button>
+<button  (click)="appendToDisplay('^')"class="button complex-stuff">x^</button>
+<button  (click)="appendToDisplay('*')" class="button basic-stuff">*</button>
+<button  (click)="appendToDisplay('/')"class="button basic-stuff">/</button>
+<button  (click)="appendToDisplay('ln')"class="button complex-stuff">ln</button>
+<button  (click)="appendToDisplay('2.718')"class="button complex-stuff">e</button>
+<button  (click)="appendToDisplay('+')"class="button basic-stuff">+</button>
+<button  (click)="appendToDisplay('pow(2)')"class="button complex-stuff">x ²</button>
+<button  (click)="appendToDisplay('log')"class="button complex-stuff">log</button>
+<button  (click)="appendToDisplay('cos')"class="button complex-stuff">cos</button>
+<button  (click)="appendToDisplay('-')"class="button basic-stuff">-</button>
+<button  (click)="appendToDisplay('√')"class="button complex-stuff">√</button>
+<button (click)="appendToDisplay('sin')" class="button complex-stuff">sin</button>
+<button (click)="appendToDisplay('tan')" class="button complex-stuff">tan</button>
+<button (click)="appendToDisplay('=')"class="button triggers">=</button>
+<button (click)="appendToDisplay('3.1415')"class="button complex-stuff">π</button>
+
+</div>
+</div>
+</div> 
+
+  ******************************************************************************************************************************************************************************************
 
 
