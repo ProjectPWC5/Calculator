@@ -1,0 +1,199 @@
+--CalculatorController
+
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+
+namespace CalDemo1.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CalculateController : ControllerBase
+    {
+        
+
+        [HttpGet]
+        [Route("api/math/add")]
+        public double Add(double num1, double num2)
+        {
+            return num1 + num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/subtract")]
+        public double Subtract(double num1, double num2)
+        {
+            return num1 - num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/multiply")]
+        public double Multiply(double num1, double num2)
+        {
+            return num1 * num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/divide")]
+        public double Divide(double num1, double num2)
+        {
+            if (num2 == 0)
+            {
+                throw new DivideByZeroException("Division by zero is not allowed.");
+            }
+            return num1 / num2;
+        }
+
+        [HttpGet]
+        [Route("api/math/square-root")]
+        public double SquareRoot(double num)
+        {
+            if (num < 0)
+            {
+                throw new ArgumentException("Square root of a negative number is not allowed.");
+            }
+            return Math.Sqrt(num);
+        }
+        [HttpGet]
+        [Route("api/math/sine")]
+        public double Sine(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Sin(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosine")]
+        public double Cosine(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Cos(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/tangent")]
+        public double Tangent(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return Math.Tan(angleInRadians);
+        }
+        [HttpGet]
+        [Route("api/math/cotangent")]
+        public double Cotangent(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Tan(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosecant")]
+        public double Cosecant(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Sin(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/secant")]
+        public double Secant(double angleInDegrees)
+        {
+            double angleInRadians = angleInDegrees * (Math.PI / 180.0);
+            return 1 / Math.Cos(angleInRadians);
+        }
+
+        [HttpGet]
+        [Route("api/math/sinh")]
+        public double Sinh(double x)
+        {
+            return Math.Sinh(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/cosh")]
+        public double Cosh(double x)
+        {
+            return Math.Cosh(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/tanh")]
+        public double Tanh(double x)
+        {
+            return Math.Tanh(x);
+        }
+        [HttpGet]
+        [Route("api/math/percentage")]
+        public double Percentage(double value, double percentage)
+        {
+            return (value * percentage) / 100.0;
+        }
+
+        [HttpGet]
+        [Route("api/math/square")]
+        public double Square(double num)
+        {
+            return num * num;
+        }
+
+        [HttpGet]
+        [Route("api/math/cube")]
+        public double Cube(double num)
+        {
+            return num * num * num;
+        }
+
+        [HttpGet]
+        [Route("api/math/cube-root")]
+        public double CubeRoot(double num)
+        {
+            return Math.Pow(num, 1.0 / 3.0);
+        }
+
+        [HttpGet]
+        [Route("api/math/power")]
+        public double Power(double baseValue, double exponent)
+        {
+            return Math.Pow(baseValue, exponent);
+        }
+
+        [HttpGet]
+        [Route("api/math/negative-power")]
+        public double NegativePower(double baseValue, double exponent)
+        {
+            if (baseValue == 0 && exponent <= 0)
+            {
+                throw new ArgumentException("0 to the power of a non-positive number is undefined.");
+            }
+            return 1.0 / Math.Pow(baseValue, exponent);
+        }
+        [HttpGet]
+        [Route("api/math/ten-power")]
+        public double TenPower(double x)
+        {
+            return Math.Pow(10, x);
+        }
+        [HttpGet]
+        [Route("api/math/log")]
+        public double Log(double x)
+        {
+            if (x <= 0)
+            {
+                throw new ArgumentException("Logarithm of a non-positive number is undefined.");
+            }
+            return Math.Log10(x);
+        }
+
+        [HttpGet]
+        [Route("api/math/ln")]
+        public double Ln(double x)
+        {
+            if (x <= 0)
+            {
+                throw new ArgumentException("Natural logarithm of a non-positive number is undefined.");
+            }
+            return Math.Log(x);
+        }
+        
+    }
+}
