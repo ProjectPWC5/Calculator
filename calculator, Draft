@@ -1,1 +1,145 @@
-C
+calculator.component.html
+
+
+<div class="calculator">
+    <div class="result">{{ result }}</div>
+    <div class="buttons">
+      <button (click)="appendToResult('1')">1</button>
+      <button (click)="appendToResult('2')">2</button>
+      <button (click)="appendToResult('3')">3</button>
+      <button (click)="appendToResult('+')">+</button>
+      <button (click)="appendToResult('4')">4</button>
+      <button (click)="appendToResult('5')">5</button>
+      <button (click)="appendToResult('6')">6</button>
+      <button (click)="appendToResult('-')">-</button>
+      <button (click)="appendToResult('7')">7</button>
+      <button (click)="appendToResult('8')">8</button>
+      <button (click)="appendToResult('9')">9</button>
+      <button (click)="appendToResult('*')">*</button>
+      <button (click)="appendToResult('0')">0</button>
+      <button (click)="clearResult()">C</button>
+      <button (click)="calculateResult()">=</button>
+      <button (click)="appendToResult('/')">/</button>
+    </div>
+  </div>
+
+
+calculator.component.css
+
+
+.calculator {
+    width: 300px;
+    margin: 0 auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .result {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 5px;
+  }
+  
+  button {
+    font-size: 18px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #eee;
+  }
+  
+
+
+calculator.component.ts
+
+
+import { Component } from '@angular/core';
+import { AddCalculatorService } from './add-calculator.service';
+
+
+
+@Component({
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
+})
+export class CalculatorComponent {
+  result = '';
+  input1 ='';
+  input2='';
+  op='';
+
+  appendToResult(value: string) {
+    this.result += value;
+  }
+
+
+  clearResult() {
+    this.result = '';
+  }
+
+  calculateResult() {
+    const part=this.result.split(/([+\-*/])/);
+    this.input1=part[0];
+    this.op=part[1];
+    this.input2=part[2];
+    console.log(this.input1);
+    console.log(this.op);
+    console.log(this.input2);
+    try {
+      this.result = eval(this.result);
+    } catch (error) {
+      this.result = 'Error';
+    }
+  }
+  
+  add() {
+    this.AddCalculatorService.add(this.input1, this.input2)
+      .subscribe(result => {
+        this.result = result;
+      });
+
+}
+}
+
+
+add-calculator.service.ts
+
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AddCalculatorService {
+
+  private apiUrl = 'https://your-api-url'; // Replace with your API URL
+
+  constructor(private http: HttpClient) { }
+
+  add(num1: number, num2: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/add?num1=${num1}&num2=${num2}`);
+  }
+
+}
+
+
+app.component.html
+
+
+<div>
+  <app-calculator></app-calculator>
+</div>
