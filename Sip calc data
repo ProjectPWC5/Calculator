@@ -1,0 +1,52 @@
+sip calc.
+
+
+
+using Microsoft.AspNetCore.Mvc;
+
+[Route("api/[controller]")]
+[ApiController]
+public class SIPController : ControllerBase
+{
+    [HttpGet]
+    [Route("CalculateReturns")]
+    public ActionResult<decimal> CalculateReturns(decimal principal, int durationInMonths, double annualInterestRate)
+    {
+        double monthlyInterestRate = annualInterestRate / 12 / 100;
+        int totalMonths = durationInMonths;
+        decimal futureValue = principal;
+
+        for (int i = 0; i < totalMonths; i++)
+        {
+            futureValue += futureValue * (decimal)monthlyInterestRate;
+        }
+
+        return futureValue;
+    }
+}
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+lumpsum
+
+
+using Microsoft.AspNetCore.Mvc;
+
+[Route("api/[controller]")]
+[ApiController]
+public class LumpSumController : ControllerBase
+{
+    [HttpGet]
+    [Route("CalculateReturns")]
+    public ActionResult<decimal> CalculateReturns(decimal principal, double annualInterestRate)
+    {
+        double monthlyInterestRate = annualInterestRate / 12 / 100;
+        decimal futureValue = principal;
+
+        // Assuming a one-time investment, so the duration is 1 month
+        futureValue += futureValue * (decimal)monthlyInterestRate;
+
+        return futureValue;
+    }
+}
