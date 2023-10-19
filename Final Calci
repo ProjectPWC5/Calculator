@@ -708,6 +708,40 @@ namespace CalDemo1.Controllers
             return factorial;
         }
 
+//for sip..new addition to final code
+
+         [HttpGet]
+         [Route("api/math/sip")]
+         [EnableCors("AllowOrigin")]
+         public float  CalculateReturns(float principal, int durationInMonths, float  annualInterestRate)
+         {
+             double monthlyInterestRate = annualInterestRate / 12 / 100;
+             int totalMonths = durationInMonths;
+             float futureValue = principal;
+        
+             for (int i = 0; i < totalMonths; i++)
+             {
+                 futureValue += futureValue * (float)monthlyInterestRate;
+             }
+        
+             return futureValue;
+         }
+
+//for lumpsum..new addition to final code
+
+             [HttpGet]
+             [Route("api/math/lumpsum")]
+             public float CalculateReturns(float principal, float annualInterestRate)
+             {
+                 double monthlyInterestRate = annualInterestRate / 12 / 100;
+                 float futureValue = principal;
+            
+                 // Assuming a one-time investment, so the duration is 1 month
+                 futureValue += futureValue * (float)monthlyInterestRate;
+            
+                 return futureValue;
+             }
+
 
     }
 }
