@@ -25,3 +25,276 @@ else {
 
       }
     }
+
+
+
+
+
+
+*******************************************************************************************
+
+import { Component,OnInit } from '@angular/core';
+import { AddCalculatorService } from '../add-calculator.service';
+
+
+@Component({
+  selector: 'app-calculator',
+  templateUrl: './calculator.component.html',
+  styleUrls: ['./calculator.component.css']
+})
+export class CalculatorComponent {
+  result = '';
+  input1 ='';
+  input2='';
+  op='';
+  memory ='';
+
+
+  public a:number=0;
+  public b:number=0;
+
+  constructor(private addCal: AddCalculatorService){};
+
+  public add:number=0;
+
+  appendToDisplay(value: string) {
+    this.result += value;
+  }
+
+  addToMemory() {
+    const resultNumber = parseFloat(this.result);
+    if (!isNaN(resultNumber)) {
+      this.memory='';
+      this.memory += resultNumber;
+
+    }
+  }
+
+  recallMemory() {
+    this.result = this.memory.toString();
+  }
+  
+  
+
+  clearResult() {
+    this.result = '';
+  }
+  clearBack() {
+    if (this.result.length > 0) {
+      this.result = this.result.slice(0, -1);
+    }
+  }
+  
+
+  calculateResult() {
+    
+    const matches = this.result.match(/([a-zA-Z]+)([0-9]+)/);
+    if (matches) {
+      this.op = matches[1]; 
+      const num = matches[2];
+      this.b = parseFloat(num);
+    } 
+ 
+    else if (/\(/.test(this.result)) {
+      const part = this.result.match(/-?\d+|[+*\/-]/g); // Updated the regular expression
+    
+      if (part) {
+        this.input1 = part[0];
+        this.a = parseFloat(this.input1);
+    
+        if (part.length > 1) {
+          this.op = part[1];
+    
+          if (part.length === 3) {
+            this.input2 = part[2];
+            this.b = parseFloat(this.input2);
+          }
+        }
+      }
+    }
+    
+    else {
+      const part=this.result.split(/([+\-*/^%!])/)
+      console.log(part);
+      if(part.length==5){
+        if(part[1]=='-'){
+          this.input1=part[2];
+          this.a=parseFloat(this.input1)*(-1);
+  
+          this.op=part[3];
+  
+          this.input2=part[4];
+          this.b=parseFloat(this.input2);
+  
+        }
+        else if(part[1]=='+'){
+          this.input1=part[2];
+          this.a=parseFloat(this.input1);  
+  
+          this.op=part[3];
+  
+          this.input2=part[4];
+          this.b=parseFloat(this.input2);
+        }
+        else{
+          this.result="Invalid Operation";
+        }
+
+      }
+      
+      if(part.length==3){
+        this.input1=part[0];
+        this.a=parseFloat(this.input1);
+
+        this.op=part[1];
+        this.input2=part[2];
+        this.b=parseFloat(this.input2);
+
+      }
+    }
+
+    switch (this.op) {
+      case '+':
+        this.addCal.add(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+        break;
+      case '-':
+        this.addCal.sub(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+      case '*':
+        this.addCal.mul(this.a, this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+
+      case '/':
+        if(this.b!==0){
+          this.addCal.div(this.a, this.b).subscribe((data) => {
+            this.result = data.toString();
+          });
+        }
+        else{
+          this.result='Division by zero not allowed';
+        }
+
+        break;
+      case '^': 
+        if(this.b==2){
+          this.addCal.sqr(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+        else if(this.b==3){
+          this.addCal.cube(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+        else if(this.b==0.5){
+          if(this.a>0){
+          this.addCal.sqrt(this.a).subscribe((data) => {
+            this.result = data.toString();
+          });
+        }
+          else{
+            this.result="Negative number not allowed";
+          }
+        }
+        else if(this.b==0){
+          this.result='1';
+        }
+
+        else{
+          this.addCal.pow(this.a,this.b).subscribe((data) => {
+            this.result = data.toString();
+          });
+
+        }
+
+        break;
+
+      case 'sin': 
+        this.addCal.sin(this.b).subscribe((data) => {
+          this.result = data.toString();
+        });
+
+        break;
+
+      case 'cos':
+      this.addCal.cos(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+    case 'tan':
+      this.addCal.tan(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+
+    case 'log':
+      if(this.b>0){
+      this.addCal.log(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+    }
+      else{
+        this.result="Negative not allowed";
+      }
+
+      break;
+  
+
+    case 'ln':
+      if(this.b>0){
+      this.addCal.ln(this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+    }
+      else{
+        this.result="Negative not allowed";
+      }
+
+      break;
+
+    case '%':
+      this.addCal.percentage(this.a, this.b).subscribe((data) => {
+        this.result = data.toString();
+      });
+
+      break;
+
+    case '!':
+      if(this.a>=0){
+      this.addCal.fact(this.a).subscribe((data) => {
+        this.result = data.toString();
+      });
+    }
+      else{
+        this.result="Negative not allowed";
+      }
+
+      break;
+
+      default:
+        this.result = 'Invalid operation';
+    }
+  
+    // if (this.result.length > 25) { // You can adjust the length limit as needed
+    //   this.result = 'Overflow Error';
+
+    // }
+  }
+    
+
+  }
+
+new code 
+calculator.component.ts
