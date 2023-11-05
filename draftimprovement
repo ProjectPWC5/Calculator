@@ -1,0 +1,27 @@
+else {
+      const part=this.result.split(/([+\-*/^%!])/)
+
+      if(part.length>3){
+        if(part[0]=='-'){
+          this.input1=part[1];
+          this.a=parseFloat(this.input1)*(-1);
+        }
+        else if(part[0]=='+'){
+          this.input1=part[1];
+          this.a=parseFloat(this.input1);  
+        }
+        else{
+          this.result="Invalid operator";
+        }
+
+      }
+      this.input1=part[0];
+      this.a=parseFloat(this.input1);
+
+      this.op=part[1];
+      if(part.length==3){
+        this.input2=part[2];
+        this.b=parseFloat(this.input2);
+
+      }
+    }
