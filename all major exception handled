@@ -2,7 +2,8 @@ calculator.component.ts
 ...................................................
 
 
-  import { Component,OnInit } from '@angular/core';
+
+import { Component,OnInit } from '@angular/core';
 import { AddCalculatorService } from '../add-calculator.service';
 
 
@@ -112,40 +113,40 @@ export class CalculatorComponent {
           this.input2=part[4];
           this.b=parseFloat(this.input2);
         }
-        else{
+        else if(part[1]=='*'|| part[1]=='/'){
           this.result="Invalid Operation";
+          
         }
 
       }
       
       if(part.length==3)
       {
-        const fun:string[]=['sin','cos','tan','log','ln']
-        if (fun.includes(part[0]))
-      {
-       if (part[1]=="-")
-       {
-        this.op=part[0];
-        this.input2=part[2];
-        this.b=parseFloat(this.input2)*(-1);
-
-        console.log(this.op,this.b);
-
-
-       }
-       else{
-
         this.input1=part[0];
         this.a=parseFloat(this.input1);
 
         this.op=part[1];
         this.input2=part[2];
-        this.b=parseFloat(this.input2); 
-       }
+        this.b=parseFloat(this.input2);
+
+        const fun:string[]=['sin','cos','tan','log','ln']
+        if (fun.includes(part[0])&& part[1]=='-')
+        {
+      
+        console.log (part);
+      
+        this.op=part[0];
+        this.input2=part[2];
+        this.b=parseFloat(this.input2)*(-1);
+
+        console.log(this.op,this.b);
           
         }
+       
+        
         
       }
+       
     }
 
     switch (this.op) {
